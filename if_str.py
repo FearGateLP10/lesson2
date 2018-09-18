@@ -8,8 +8,8 @@
 
 
 def my_func(one, two):
-	if type(one) is str and type(two) is str:
-		if len(one) == len(two):
+	if isinstance(one, str) and isinstance(two, str):
+		if one == two:
 			return 1
 		elif len(one) > len(two):
 			return 2

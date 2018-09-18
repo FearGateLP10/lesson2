@@ -1,1 +1,6 @@
 lesson2
+*.txt
+*.pyc
+*.log
+settings.py
+datetime_test.py
