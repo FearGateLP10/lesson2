@@ -21,23 +21,21 @@ def get_planet(bot, update):
     text = 'Вызван /ephem'
     logging.info(text)
 
-    planet_name = update.message.text.split()[1]
-    date = datetime.datetime.now()
+    try:
+        planet_name = update.message.text.split()[1]
+        date = datetime.datetime.now()
 
-    # if planet_name == 'Mars':
-    #     ephem_planet = ephem.Mars(date.strftime('%Y/%m/%d'))
-    # elif planet_name == 'Venus':
-    #     ephem_planet = ephem.Venus(date.strftime('%Y/%m/%d'))
+        ephem_planet = getattr(ephem, planet_name)(datetime.datetime.now().strftime('%Y/%m/%d'))    # (datetime.datetime.today())
 
-    # ephem_planet = ephem.planet_name(datetime.datetime.now().strftime('%Y/%m/%d'))
+        update.message.reply_text(planet_name)
+        update.message.reply_text(ephem.constellation(ephem_planet))
 
-    ephem_planet = getattr(ephem, planet_name)(datetime.datetime.now().strftime('%Y/%m/%d'))
-    # (datetime.datetime.today())
-
-    ephem.constellation(ephem_planet)
-    # update.message.reply_text(text)
-    update.message.reply_text(planet_name)
-    update.message.reply_text(ephem.constellation(ephem_planet))
+    except AttributeError:
+        text_except = ('Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Phobos', 'Deimos', 'Jupiter', 'Io', 'Europa', 
+            'Ganymede', 'Callisto', 'Saturn', 'Mimas', 'Enceladus', 'Tethys', 'Dione', 'Rhea', 'Titan', 'Hyperion', 
+            'Iapetus', 'Uranus', 'Ariel', 'Umbriel', 'Titania', 'Oberon', 'Miranda', 'Neptune', 'Pluto'
+            )
+        update.message.reply_text('Введите название планеты из списка: {}'.format(text_except))
 
 
 def talk_to_me(bot, update):
